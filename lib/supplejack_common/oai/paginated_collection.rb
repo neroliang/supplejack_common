@@ -22,6 +22,9 @@ module SupplejackCommon
       end
 
       def each
+        Rails.logger.info "COMMON: #{client}"
+        Rails.logger.info "COMMON: #{client.list_records(options)}"
+        Rails.logger.info "COMMON: #{client.list_records(options).full}"
         client.list_records(options).full.each do |oai_record|
           record = klass.new(oai_record)
           record.set_attribute_values
