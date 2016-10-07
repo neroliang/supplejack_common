@@ -6,7 +6,7 @@
 # http://digitalnz.org/supplejack 
 
 require "spec_helper"
-
+require 'pry'
 describe SupplejackCommon::Loader do
 
   let(:parser) { mock(:parser, strategy: "json", name: "Europeana", content: "class Europeana < SupplejackCommon::Json::Base; end", file_name: "europeana.rb") }
@@ -75,6 +75,7 @@ describe SupplejackCommon::Loader do
     end
 
     it "returns the class singleton" do
+      binding.pry
       loader.parser_class.should eq LoadedParser::Staging::Europeana
     end
   end

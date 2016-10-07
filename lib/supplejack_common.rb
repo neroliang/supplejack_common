@@ -51,7 +51,7 @@ module SupplejackCommon
     attr_accessor :parser_base_path
 
     def redis
-      @redis ||= Redis.new
+      @redis ||= Redis.new(:db => 10)
     end
   end
 end

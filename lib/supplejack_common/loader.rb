@@ -43,7 +43,7 @@ module SupplejackCommon
     def parser_class
       "LoadedParser::#{environment}::#{parser_class_name}".constantize
     end
-
+# LoadedParser::Staging.constants.select {|c| Class === LoadedParser::Staging.const_get(c)}
     def load_parser
       return @loaded unless @loaded.nil?
 
@@ -60,6 +60,7 @@ module SupplejackCommon
 
     def clear_parser_class_definitions
       mod = "LoadedParser::#{environment}".constantize
+      # binding.pry
       if mod.const_defined?(parser_class_name, false)
         parser_class.clear_definitions
         mod.send(:remove_const, parser_class_name.to_sym)
