@@ -3,12 +3,14 @@ require "pry"
 
 describe SupplejackCommon::Loader do
 
-  let(:parser) { mock(:parser, strategy: "oai", name: "Europeana Parser", content: "class EuropeanaParser < SupplejackCommon::Oai::Base; end", file_name: "europeana.rb") }
+  let(:parser_rev) { mock(:parser, strategy: "oai", name: "Europeana Parser", content: "class EuropeanaParser < SupplejackCommon::Oai::Base; end", file_name: "europeana.rb") }
+  let(:parser) { mock(:parser, strategy: "oai", name: "Europeana Parser", content: "class EuropeanaParser < SupplejackCommon::Oai::Base; set 'xxxyyyy'; end", file_name: "europeana.rb") }
+  
   let(:loader) { SupplejackCommon::Loader.new(parser, "staging") }
-  let(:base_path) { File.dirname(__FILE__) + "/teemp" }
+  let(:base_path) { File.dirname(__FILE__) + "/temp" }
 
   before(:each) do
-    SupplejackCommon.parser_base_path = File.dirname(__FILE__) + "/teemp"
+    SupplejackCommon.parser_base_path = File.dirname(__FILE__) + "/temp"
   end
 
   after do
@@ -33,7 +35,6 @@ describe SupplejackCommon::Loader do
     end
 
     it "returns the class singleton" do
-      binding.pry
       loader.parser_class.should eq LoadedParser::Staging::EuropeanaParser
     end
   end
@@ -52,6 +53,9 @@ describe SupplejackCommon::Loader do
     it "loads the file" do
       loader.should_receive(:load).with(loader.path)
       loader.load_parser.should be_true
+
+      date = Date.today
+      loader.load_parser.new
     end
   end
 
@@ -69,7 +73,7 @@ describe SupplejackCommon::Loader do
 
   describe "clear_parser_class_definitions" do
     before(:each) do
-      loader.load_parser
+      loader.load_parserc
     end
 
     it "clears the parser class definitions" do
