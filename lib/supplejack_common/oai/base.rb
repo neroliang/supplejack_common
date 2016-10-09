@@ -23,6 +23,10 @@ module SupplejackCommon
       class_attribute :_set
       self._set = {}
 
+      def self.inherited
+        class_attribute :setkk
+      end
+
       class << self
         attr_reader :response
 
@@ -44,10 +48,11 @@ module SupplejackCommon
 
         def clear_definitions
           super
-          # SupplejackCommon::Oai::Base._metadata_prefix[self.identifier] = nil
-          # SupplejackCommon::Oai::Base._set[self.identifier] = nil
-          self._metadata_prefix = {}
-          self._set = {}          
+          SupplejackCommon::Oai::Base._metadata_prefix[self.identifier] = nil
+          SupplejackCommon::Oai::Base._set[self.identifier] = nil
+          # what used to be
+          # self._metadata_prefix = {}
+          # self._set = {}
         end
 
         def metadata_prefix(prefix)
