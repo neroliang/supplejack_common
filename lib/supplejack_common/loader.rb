@@ -62,6 +62,8 @@ module SupplejackCommon
       mod = "LoadedParser::#{environment}".constantize
       # binding.pry
       if mod.const_defined?(parser_class_name, false)
+        puts "Clear: [#{parser_class}]"
+        puts "Clear: #{parser_class.constants}"
         parser_class.clear_definitions
         mod.send(:remove_const, parser_class_name.to_sym)
       end

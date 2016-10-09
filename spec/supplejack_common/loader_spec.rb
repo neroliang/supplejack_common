@@ -75,7 +75,6 @@ describe SupplejackCommon::Loader do
     end
 
     it "returns the class singleton" do
-      binding.pry
       loader.parser_class.should eq LoadedParser::Staging::Europeana
     end
   end

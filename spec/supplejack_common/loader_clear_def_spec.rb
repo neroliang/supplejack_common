@@ -6,7 +6,7 @@ describe SupplejackCommon::Loader do
   let(:parser_3) { mock(:parser, strategy: "oai", name: "Europeana Parser", content: "class EuropeanaParser < SupplejackCommon::Oai::Base; end", file_name: "europeana.rb") }
   let(:parser_2) { mock(:parser, strategy: "oai", name: "Europeana Parser", content: "class EuropeanaParser < SupplejackCommon::Oai::Base; set 'parser_setset2'; end", file_name: "europeana.rb") }
   let(:parser_1) { mock(:parser, strategy: "oai", name: "Europeana Parser2", content: "class EuropeanaParser2 < SupplejackCommon::Oai::Base; set 'parser_set1'; end", file_name: "europeana.rb") }
-  let(:parser) { mock(:parser, strategy: "oai", name: "Europeana Parser", content: "class EuropeanaParser < SupplejackCommon::Oai::Base; setkk 'parser_set'; end", file_name: "europeana.rb") }
+  let(:parser) { mock(:parser, strategy: "oai", name: "Europeana Parser", content: "class EuropeanaParser < SupplejackCommon::Oai::Base; set 'parser_set'; end", file_name: "europeana.rb") }
   
   let(:loader) { SupplejackCommon::Loader.new(parser, "staging") }
   let(:base_path) { File.dirname(__FILE__) + "/temp" }
@@ -16,7 +16,7 @@ describe SupplejackCommon::Loader do
   end
 
   after do
-    # FileUtils.rmdir(SupplejackCommon.parser_base_path)
+    FileUtils.rmdir(SupplejackCommon.parser_base_path)
   end
 
   describe "#path" do
@@ -43,7 +43,6 @@ describe SupplejackCommon::Loader do
   describe "#clear the set parameter every time" do
     it "Parser Class get parser's set" do
       loader.load_parser
-      binding.pry
       loader.parser_class.get_set.should eq 'parser_set'
     end
 
@@ -80,9 +79,7 @@ describe SupplejackCommon::Loader do
     it "loads the file" do
       loader.should_receive(:load).with(loader.path)
       loader.load_parser.should be_true
-
       date = Date.today
-      loader.load_parser.new
     end
   end
 

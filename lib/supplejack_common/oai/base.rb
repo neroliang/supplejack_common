@@ -18,14 +18,11 @@ module SupplejackCommon
       attr_reader :original_xml
 
       class_attribute :_metadata_prefix
-      self._metadata_prefix = {}
-
       class_attribute :_set
-      self._set = {}
 
-      def self.inherited
-        class_attribute :setkk
-      end
+      # def self.inherited
+      #   class_attribute :setkk
+      # end
 
       class << self
         attr_reader :response
@@ -48,29 +45,29 @@ module SupplejackCommon
 
         def clear_definitions
           super
-          SupplejackCommon::Oai::Base._metadata_prefix[self.identifier] = nil
-          SupplejackCommon::Oai::Base._set[self.identifier] = nil
+          # SupplejackCommon::Oai::Base._metadata_prefix[self.identifier] = nil
+          # SupplejackCommon::Oai::Base._set[self.identifier] = nil
           # what used to be
-          # self._metadata_prefix = {}
-          # self._set = {}
+          binding.pry
+          self._metadata_prefix = nil
+          self._set = nil
         end
 
         def metadata_prefix(prefix)
-          self._metadata_prefix[self.identifier] = prefix
+          self._metadata_prefix = prefix
         end
 
-        def get_metadata_prefix
-          self._metadata_prefix[self.identifier]
+        def get_metadata_prefix()
+          self._metadata_prefix
         end
 
         def set(name)
-          self._set[self.identifier] = name
+          self._set = name
         end
 
-        def get_set
-          self._set[self.identifier]
+        def get_set()
+          self._set
         end
-
       end
 
       def initialize(xml, from_raw=false)
